@@ -64,7 +64,8 @@
     background-color: #e74c3c ;
 }
 
-.line > .symbols {
+.line > .symbols,
+.line > .minus-plus {
     background-color: #3498db ;
 }
 
@@ -87,6 +88,7 @@
     background-color: #c0392b;
 }
 
-.line > .symbols:hover {
+.line > .symbols:hover,
+.line > .minus-plus:hover {
     background-color: #5cacee;
 }
