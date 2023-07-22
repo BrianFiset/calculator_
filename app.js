@@ -38,22 +38,12 @@ function clear(){
 }
 
 function changeSign(){
-    if(num1 != 0 && num2 == 0){
-        if(num1[0] == '-'){
-            num1 = num1.slice(1);
-            calcScreenNum2.textContent = num1;
-        } else {
-            num1 = `-${num1}`;
-            calcScreenNum2.textContent = num1;
-        };
-    }else if(num1 == 0 && num2 != 0){
-        if(num2[0] == '-'){
-            num2 = num2.slice(1)
-            calcScreenNum2.textContent = num2;
-        } else {
-            num2 = `-${num2}`;
-            calcScreenNum2.textContent = num2;
-        }
+    if(num1[0] == '-'){
+        num1 = num1.slice(1)
+        calcScreenNum2.textContent = num1;
+    } else {
+        num1 = `-${num1}`;
+        calcScreenNum2.textContent = num1;
     };
 };
 
