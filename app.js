@@ -58,10 +58,11 @@ function changeSign(){
 };
 
 function isEqual(){
-    let a = num1;
-    let b = num2;
+    let a = roundNumber(num1);
+    let b = roundNumber(num2);
     operate(operator,num2,num1);
     changeNum();
+    num2 = roundNumber(num2);
     if(a == 0 || b == 0){
         calcScreenNum1.textContent = `${num2}`;
     } else{
@@ -92,7 +93,7 @@ function isDot(){
 }
 
 function isNumber(num){
-    if(num1 == 0) {
+    if(num1 === 0) {
         num1 = `${num}`;
     } else {
     num1 += `${num}`;
@@ -100,8 +101,9 @@ function isNumber(num){
     calcScreenNum2.textContent = num1;
 };
 
-function roundNumber(){
-    num2 = Math.round(num2 * 100) / 100
+function roundNumber(num){
+    num = Math.round(num * 100) / 100
+    return num
 }
 
 function changeOper() {
@@ -121,8 +123,8 @@ function changeNum(){
         num2 = num1;
         num1 = 0;
     }
-    roundNumber()
-    calcScreenNum1.textContent = num2;
+    let a = roundNumber(num2)
+    calcScreenNum1.textContent = a;
 }
 
 function add(a, b) {
