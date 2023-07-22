@@ -38,10 +38,10 @@ function clear(){
 }
 
 function changeSign(){
-    if(num1[0] == '-'){
-        num1 = num1.slice(1)
-        calcScreenNum2.textContent = num1;
-    } else {
+        if(num1[0] == '-'){
+            num1 = num1.slice(1)
+            calcScreenNum2.textContent = num1;
+        } else {
         num1 = `-${num1}`;
         calcScreenNum2.textContent = num1;
     };
@@ -83,7 +83,7 @@ function isDot(){
 }
 
 function isNumber(num){
-    if(num1 === 0) {
+    if(num1 == 0 && !num1[1]) {
         num1 = `${num}`;
     } else {
     num1 += `${num}`;
@@ -116,6 +116,11 @@ function changeNum(){
     let a = roundNumber(num2)
     calcScreenNum1.textContent = a;
 }
+
+window.addEventListener('keydown', (e) => {
+    num1 += e.key.replace(/[^0-9.]/g,'');
+    calcScreenNum2.textContent = num1
+});
 
 function add(a, b) {
     return a + b;
