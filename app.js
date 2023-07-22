@@ -1,5 +1,7 @@
 const calc = document.querySelectorAll('.line > div');
-const calcScreen = document.querySelector('.calc-screen');
+const calcScreenNum1 = document.querySelector('.calc-screen .number1');
+const calcScreenNum2 = document.querySelector('.calc-screen .number2');
+const calcScreenOper = document.querySelector('.calc-screen .operator');
 let num1 = 0;
 let num2 = 0;
 let operator = '';
@@ -10,7 +12,7 @@ calc.forEach(number => number.addEventListener('click',(e) => checkCalcInput(e.t
 function checkCalcInput(btn){
     if(Number(btn) == btn){
         isNumber(btn);
-    } else if(btn === '×'|| btn === '÷'||
+    }else if(btn === '×'|| btn === '÷'||
     btn === '+'|| btn === '-'){
         isOperator(btn);
     }else if(btn === '='){
@@ -18,7 +20,11 @@ function checkCalcInput(btn){
     }else if(btn === 'C'){
         clear();
     }else if(btn === '+/-'){
-        changeSign()
+        changeSign();
+    }else if(btn === '←'){
+        deleteLast();
+    }else if(btn === '.'){
+        isDot()
     };
 }
 
@@ -26,46 +32,64 @@ function clear(){
     num1 = 0;
     num2 = 0;
     operator = '';
-    calcScreen.textContent = num2;
+    calcScreenNum1.textContent = '';
+    calcScreenOper.textContent = '';
+    calcScreenNum2.textContent = '0';
 }
 
 function changeSign(){
     if(num1 != 0 && num2 == 0){
         if(num1[0] == '-'){
             num1 = num1.slice(1);
-            calcScreen.textContent = num1;
+            calcScreenNum2.textContent = num1;
         } else {
             num1 = `-${num1}`;
-            calcScreen.textContent = num1;
+            calcScreenNum2.textContent = num1;
         };
     }else if(num1 == 0 && num2 != 0){
-        if(num1[0] == '-'){
+        if(num2[0] == '-'){
             num2 = num2.slice(1)
-            calcScreen.textContent = num1;
+            calcScreenNum2.textContent = num2;
         } else {
             num2 = `-${num2}`;
-            calcScreen.textContent = num2;
+            calcScreenNum2.textContent = num2;
         }
     };
 };
 
 function isEqual(){
+    let a = num1;
+    let b = num2;
     operate(operator,num2,num1);
     changeNum();
-}
+    if(a == 0 || b == 0){
+        calcScreenNum1.textContent = `${num2}`;
+    } else{
+        calcScreenOper.textContent = '';
+        calcScreenNum2.textContent = ``;
+        calcScreenNum1.textContent = `${b} ${operator} ${a} = ${num2}`;
+    };
+};
 
 function isOperator(oper){
     if(num1 == 0 && num2 == 0){
-        return
+        return;
     }else if(operator === ''){
         operator = oper;
-        changeNum()
+        changeNum();
     }else {
         isEqual();
         operator = oper;
-        changeNum()
-    }
+        changeNum();
+    };
+    changeOper();
 };
+
+function isDot(){
+    if(String(num1).includes('.')) return
+    num1 += '.';
+    calcScreenNum2.textContent = num1;
+}
 
 function isNumber(num){
     if(num1 == 0) {
@@ -73,7 +97,21 @@ function isNumber(num){
     } else {
     num1 += `${num}`;
     };
-    calcScreen.textContent = num1;
+    calcScreenNum2.textContent = num1;
+};
+
+function roundNumber(){
+    num2 = Math.round(num2 * 100) / 100
+}
+
+function changeOper() {
+    calcScreenOper.textContent = operator;
+};
+
+function deleteLast(){
+    if(calcScreenNum2.textContent === '') return
+    num1 = num1.slice(0,-1);
+    calcScreenNum2.textContent = num1;
 };
 
 function changeNum(){
@@ -83,8 +121,10 @@ function changeNum(){
         num2 = num1;
         num1 = 0;
     }
-    calcScreen.textContent = num2;
+    roundNumber()
+    calcScreenNum1.textContent = num2;
 }
+
 function add(a, b) {
     return a + b;
 };
